@@ -1,0 +1,14 @@
+plugins:
+  image: busybox
+  volumes:
+    - /home/dkr/.vim/plugged
+
+vim:
+  build: .
+  volumes:
+    - .:/home/dkr/workspace
+  volumes_from:
+    - plugins
+  environment:
+    - DOCKER_GID=1001
+    - WORKSPACE=/home/dkr/workspace
