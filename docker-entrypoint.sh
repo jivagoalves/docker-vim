@@ -24,23 +24,27 @@ if [ "$WORKSPACE" ]; then
   mkdir -p "$WORKSPACE"
 fi
 
-echo "Installing Vim-Plug"
-mkdir -p $DOCKER_HOME/.vim/autoload
-mv /tmp/plug.vim $DOCKER_HOME/.vim/autoload/
-chown -R $DOCKER_USER:$DOCKER_USER $DOCKER_HOME
+if [ ! -f "$DOCKER_HOME/.vim/autoload/plug.vim" ]; then
+  echo "Installing Vim-Plug"
+  mkdir -p $DOCKER_HOME/.vim/autoload
+  mv /plug.vim $DOCKER_HOME/.vim/autoload/
+  chown -R $DOCKER_USER:$DOCKER_USER $DOCKER_HOME
+fi
 
-echo "Installing dotfiles"
-mv /tmp/dotfiles $DOCKER_HOME/
-chown -R $DOCKER_USER:$DOCKER_USER $DOCKER_HOME
-su -lc 'cd ~/dotfiles && git checkout setup_docker' $DOCKER_USER
-su -lc 'cd ~/dotfiles && ./install.sh' $DOCKER_USER
+if [ ! -d "$DOCKER_HOME/dotfiles" ]; then
+  echo "Installing dotfiles"
+  mv /dotfiles $DOCKER_HOME/
+  chown -R $DOCKER_USER:$DOCKER_USER $DOCKER_HOME
+  su -lc 'cd ~/dotfiles && git checkout setup_docker' $DOCKER_USER
+  su -lc 'cd ~/dotfiles && ./install.sh' $DOCKER_USER
+fi
 
 if [ "$1" = '/usr/bin/vim' ]; then
   echo "Login shell as '$DOCKER_USER'"
   if [ "$WORKSPACE" ]; then
-    exec su -lc "cd $WORKSPACE && $@" $DOCKER_USER
+    exec su -c "cd $WORKSPACE && $@" $DOCKER_USER
   else
-    exec su -lc "'$@'" $DOCKER_USER
+    exec su -c "$@" $DOCKER_USER
   fi
 fi
 

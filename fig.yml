@@ -1,14 +1,17 @@
-plugins:
+home:
   image: busybox
   volumes:
-    - /home/dkr/.vim/plugged
+    - /home/dkr
 
 vim:
   build: .
   volumes:
     - .:/home/dkr/workspace
+    - /tmp:/tmp
   volumes_from:
-    - plugins
+    - home
   environment:
-    - DOCKER_GID=1001
     - WORKSPACE=/home/dkr/workspace
+    - DOCKER_GID
+    - TMUX
+    - TMUX_PANE
