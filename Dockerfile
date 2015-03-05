@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
       tmux \
       vim-nox \
       gcc make libevent-dev libncurses5-dev \
+      && curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
+      && chmod +x /usr/local/bin/gosu \
       && cd /tmp && curl -OL http://downloads.sourceforge.net/tmux/tmux-1.9a.tar.gz \
       && tar xf tmux-1.9a.tar.gz \
       && cd tmux-1.9a && ./configure && make && make install \
