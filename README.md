@@ -3,7 +3,7 @@ My vim's docker image!
 
 ## Usage
 
-The recommended way is to use [fig](http://www.fig.sh). The following config is a good example:
+The recommended way is to use [docker-compose](http://docs.docker.com/compose/install/). The following config is a good example:
 ```yml
 home:
   image: busybox
@@ -15,6 +15,8 @@ vim:
   volumes:
     - .:/home/dkr/workspace
     - /tmp:/tmp
+    - /home/jivago/.ssh:/home/dkr/.ssh:ro
+    - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - home
   environment:
@@ -22,18 +24,19 @@ vim:
     - DOCKER_GID
     - TMUX
     - TMUX_PANE
+    - DISPLAY=unix:0
 ```
 
 Then fire up vim with:
 ```
-$ fig run --rm vim
+$ docker-compose run --rm vim
 ```
 
 ## How to Build
 
-You can build using fig in this repo:
+You can build using docker-compose in this repo:
 ```
-$ fig build vim
+$ docker-compose build vim
 ```
 
 ## How to Push to Docker Hub Registry
