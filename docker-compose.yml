@@ -16,3 +16,4 @@ vim:
     - DOCKER_GID
     - TMUX
     - TMUX_PANE
+    - DISPLAY=unix:0
