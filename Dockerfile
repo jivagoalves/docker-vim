@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
       git \
       tmux \
       vim-nox \
+      xclip \
       gcc make libevent-dev libncurses5-dev \
       && curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
       && chmod +x /usr/local/bin/gosu \
